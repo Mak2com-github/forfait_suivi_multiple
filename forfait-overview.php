@@ -47,11 +47,12 @@ function forfait_overview() {
 
                                 $interval = $totalForfait->diff($totalTasks);
                                 $interval = $interval->format('%H:%I');
+
+                                $totalForfaitDisplay = $totalForfait->format('H:i');
+                                $totalTasksDisplay = $totalTasks->format('H:i');
                             } else {
                                 $interval = $forfaitTotalTime;
                             }
-                            $totalForfaitDisplay = $totalForfait->format('H:i');
-                            $totalTasksDisplay = $totalTasks->format('H:i');
                             ?>
                             <?php if ($interval <= '00:00') : ?>
                                 <div class="selected-forfait-alert">
@@ -62,33 +63,40 @@ function forfait_overview() {
                                     <p>Attention !</br> Le temps de ce forfait est bientôt épuisé !</p>
                                 </div>
                             <?php endif; ?>
-                            <div class="selected-forfait-datas-group">
-                                <p>Nom du Forfait: </p>
-                                <p><?= $forfait->title ?></p>
-                            </div>
-                            <div class="selected-forfait-datas-group">
-                                <p>Temps Total: </p>
-                                <p><?= $forfait->total_time ?></p>
-                            </div>
-                            <div class="selected-forfait-datas-group">
-                                <p>Nombres de tâches attribuées: </p>
-                                <p><?= $DBAction->getTasksNumberByForfait($forfait->id) ?></p>
-                            </div>
-                            <div class="selected-forfait-datas-group">
-                                <p>Total temps des tâches :</p>
-                                <p><?= $totalTasksDisplay ?></p>
-                            </div>
-                            <div class="selected-forfait-datas-group">
-                                <p>Temps Restant: </p>
-                                <p><?= $interval ?></p>
-                            </div>
-                            <div class="selected-forfait-datas-actions">
-                                <a class="update-btn-container" href="admin.php?page=modifier_forfait&id=<?= $forfait->id ?>"><button class="update-btn">Modifier</button></a>
-                                <form class="delete-btn-container" action="" method="POST">
-                                    <input type="hidden" name="id" value="<?= $forfait->id ?>">
-                                    <input class="delete-btn" type="submit" name="delete_forfait" value="Supprimer">
-                                </form>
-                            </div>
+                            <table class="selected-forfait-table">
+                                <tr>
+                                    <th>Nom du Forfait: </th>
+                                    <td><?= $forfait->title ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Temps Total: </th>
+                                    <td><?= $forfait->total_time ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Nombres de tâches attribuées: </th>
+                                    <td><?= $DBAction->getTasksNumberByForfait($forfait->id) ?></td>
+                                </tr>
+                                <?php if (isset($totalTasksDisplay)) : ?>
+                                <tr>
+                                    <th>Total temps des tâches :</th>
+                                    <td><?= $totalTasksDisplay ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <tr>
+                                    <th>Temps Restant:</th>
+                                    <td><?= $interval ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Actions</th>
+                                    <td>
+                                        <a class="update-btn-container" href="admin.php?page=modifier_forfait&id=<?= $forfait->id ?>"><button class="update-btn">Modifier</button></a>
+                                        <form class="delete-btn-container" action="" method="POST">
+                                            <input type="hidden" name="id" value="<?= $forfait->id ?>">
+                                            <input class="delete-btn" type="submit" name="delete_forfait" value="Supprimer">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     <?php endforeach; ?>
                 </div>

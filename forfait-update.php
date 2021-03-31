@@ -5,6 +5,19 @@ function forfait_update() {
 
     <div class="forfait-main">
         <div class="head">
+            <?php
+            if (isset($_SESSION['delete_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['delete_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['update_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['update_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['errors'])) :
+                echo '<div class="session-msg session-alert">';
+                foreach ($_SESSION['errors'] as $error) :
+                    echo '<p>'.$error.'</p>';
+                endforeach;
+                echo '<i class="fas fa-frown"></i></div>';
+            endif;
+            ?>
             <h2>Modifier un Forfait</h2>
             <p>Sélectionner un forfait à modifier dans la liste des forfaits ou modifiez les champs pré-rempli avec les données du forfait précédement sélectionné </p>
             <div class="head-infos">
@@ -82,11 +95,12 @@ function forfait_update() {
 
                             $interval = $totalForfait->diff($totalTasks);
                             $interval = $interval->format('%H:%I');
+
+                            $totalForfaitDisplay = $totalForfait->format('H:i');
+                            $totalTasksDisplay = $totalTasks->format('H:i');
                         } else {
                             $interval = $forfaitTotalTime;
                         }
-                        $totalForfaitDisplay = $totalForfait->format('H:i');
-                        $totalTasksDisplay = $totalTasks->format('H:i');
                         ?>
                         <tr id="<?= $forfait->id ?>">
                             <?php if ($interval <= '00:00') : ?>

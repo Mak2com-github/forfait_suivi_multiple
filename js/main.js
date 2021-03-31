@@ -16,7 +16,12 @@ function selectForfaitTimeCheck(value)
         var inputTime = document.getElementById("taskTimeInput")
         var labelTime = document.getElementById("taskTimeLabel")
         var submitTask = document.getElementById("addTaskSubmit")
+        if (inputTime.hasAttribute('max')) {
+            inputTime.removeAttribute('max')
+            labelTime.textContent = "Durée";
+        }
         inputTime.setAttribute("max", optionValueTime.dataset.time)
+
         labelTime.textContent += " (Max "+optionValueTime.dataset.time+")"
 
         if (optionValueTime.dataset.time === '00:00') {
@@ -44,11 +49,12 @@ function toggleLists(id) {
 
 function displayOverviewTableRows() {
     jQuery(".overview-forfaits-btn .forfait-custom-btn").click(function(){
+        console.log('clicked')
         jQuery('.activeButton').not(this).removeClass('activeButton');
         jQuery(this).toggleClass('activeButton');
 
         let elementID = jQuery(this).attr("id")
-        jQuery('tbody tr').show().filter(':not(.'+elementID+')').hide()
+        jQuery('.custom-table-overview tbody tr').show().filter(':not(.'+elementID+')').hide()
         jQuery('.selected-forfait-datas').show().filter(':not(.'+elementID+')').hide()
     })
 }

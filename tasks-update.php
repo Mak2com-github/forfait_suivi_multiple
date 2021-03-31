@@ -4,6 +4,19 @@ function tasks_update() {
     ?>
     <div class="forfait-main">
         <div class="head">
+            <?php
+            if (isset($_SESSION['delete_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['delete_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['update_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['update_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['errors'])) :
+                echo '<div class="session-msg session-alert">';
+                foreach ($_SESSION['errors'] as $error) :
+                    echo '<p>'.$error.'</p>';
+                endforeach;
+                echo '<i class="fas fa-frown"></i></div>';
+            endif;
+            ?>
             <h2>Modifier une tâche</h2>
             <p>Sélectionner une tâche à modifier dans la liste des tâches ou modifiez les champs pré-rempli avec les données du forfait précédement sélectionné </p>
         </div>
@@ -78,6 +91,10 @@ function tasks_update() {
                             <th><?= $task->created_at ?></th>
                             <th>
                                 <a class="update-btn-container" href="admin.php?page=modifier_tache&id=<?= $task->id ?>"><button class="update-btn">Modifier</button></a>
+                                <form class="delete-btn-container" action="" method="POST">
+                                    <input type="hidden" name="id" value="<?= $task->id ?>">
+                                    <input class="delete-btn" type="submit" name="delete_task" value="Supprimer">
+                                </form>
                             </th>
                         </tr>
                     <?php endforeach; ?>

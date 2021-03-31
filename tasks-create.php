@@ -7,63 +7,24 @@ function tasks_create() {
     ?>
     <div class="forfait-main">
         <div class="head">
+            <?php
+            if (isset($_SESSION['create_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['create_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['delete_success'])) :
+                echo '<div class="session-msg session-success"><p>'.$_SESSION['delete_success'].'<i class="fas fa-smile"></i></p></div>';
+            elseif (isset($_SESSION['errors'])) :
+                echo '<div class="session-msg session-alert">';
+                foreach ($_SESSION['errors'] as $error) :
+                    echo '<p>'.$error.'</p>';
+                endforeach;
+                echo '<i class="fas fa-frown"></i></div>';
+            endif;
+            ?>
             <h2>Ajouter une Tâche</h2>
             <p>Remplisser le formulaire pour ajouter une tâche sur un forfait</p>
         </div>
 
         <div class="forfaits-main-container">
-            <?php
-            if (isset($_POST['save_task'])) {
-                global $wpdb;
-
-                $tasks_table = $wpdb->prefix. "tasks";
-
-                $forfait_id = $_POST['forfait_id'];
-                $title = strip_tags($_POST['title']);
-                $total_time = strip_tags($_POST['task_time']);
-                $description = htmlspecialchars($_POST['description']);
-                $created_at = date('Y-m-d H:i:s', time());
-                $updated_at = date('Y-m-d H:i:s', time());
-
-                if (empty($_POST['title'])) {
-                    $errors['title'] = 'Le titre est vide';
-                }
-                if (empty($_POST['task_time'])) {
-                    $errors['task_time'] = 'Le temps total est vide';
-                }
-                if (empty($_POST['description'])) {
-                    $errors['description'] = 'La description est vide';
-                }
-
-                if (!empty($errors)) {
-                    echo '<div id="forfaitAlertBloc" class="forfait-submit-alert">';
-                    echo '<ul>';
-                    foreach ($errors as $error) {
-                        echo '<li>'.$error.'</li>';
-                    }
-                    echo '</ul>';
-                    echo '<button id="forfaitAlertClose">X</button>';
-                    echo '</div>';
-                } else {
-                    // Prépare la requete
-                    $sql = $wpdb->prepare(
-                        "INSERT INTO {$tasks_table}
-                        (forfait_id, title, task_time, description, created_at, updated_at) VALUES (%d,%s,%s,%s,%s,%s )",
-                        $forfait_id,
-                        $title,
-                        $total_time,
-                        $description,
-                        $created_at,
-                        $updated_at
-                    );
-
-                    // Execution de la requete
-                    $wpdb->query($sql);
-                    // Redirection sur url
-                    echo '<script> document.location.reload(); </script>';
-                }
-            }
-            ?>
             <div class="custom-plugin-form">
                 <?php
                 global $wpdb;
