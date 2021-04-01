@@ -404,6 +404,8 @@
 .selected-forfait-alert {
     background-color: white;
     padding: 0 10px;
+    margin: 2% 0;
+    width: 90%;
 }
 
 .selected-forfait-alert p {
@@ -435,6 +437,48 @@
     color: #1e5786;
 }
 
+/*
+ * Tableau Overview
+ */
+.custom-table-widget {
+    width: 100%;
+    border: 1px solid lightgrey;
+}
+
+.custom-table-widget thead {
+    background-color: #353535;
+    color: #ffffff;
+}
+
+.custom-table-widget .custom-col {
+    padding: 5px;
+    font-weight: 500;
+}
+
+.custom-table-widget tr th:nth-child(0n+1) {
+    width: 20%;
+}
+.custom-table-widget tr th:nth-child(0n+2) {
+    width: 30%;
+}
+.custom-table-widget tr th:nth-child(0n+3) {
+    width: 30%;
+}
+.custom-table-widget tr th:nth-child(0n+4) {
+    width: 20%;
+}
+
+.custom-table-widget tbody tr th {
+    padding: 10px;
+    font-weight: 400;
+}
+
+.custom-table-widget tbody tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+.custom-table-widget tbody tr:nth-child(even) {
+    background-color: #d8d8d8;
+}
 
 /*
  * Tableau Overview

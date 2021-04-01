@@ -169,41 +169,53 @@ function forfait_admin_js_css(){
     wp_enqueue_script('jQuery-Ui', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', null, null, true);
 }
 
-/** RECUPERATION LIST FORFAITS **/
-function getListForfait(){
-    global $wpdb;
-    $table_forfait = $wpdb->prefix.'forfait';
-    $sql = "SELECT * FROM ".$table_forfait;
-    $forfaitlist = $wpdb->get_results($sql);
-    return $forfaitlist;
+add_action('wp_dashboard_setup', 'my_custom_dashboard_widgets');
+function my_custom_dashboard_widgets() {
+    global $wp_meta_boxes;
+    wp_add_dashboard_widget('custom_help_widget', 'Forfait Suivi', 'custom_dashboard_help');
 }
 
-function getTimeTotalsForTasks($forfait_id) {
-    global $wpdb;
-    $table_tasks = $wpdb->prefix.'tasks';
-    $sql = "SELECT SEC_TO_TIME( SUM( TIME_TO_SEC( task_time ) ) ) FROM {$table_tasks} WHERE forfait_id=$forfait_id";
-    $tasksTotalTime = $wpdb->get_var($sql);
-    return $tasksTotalTime;
-}
+function custom_dashboard_help() {
+    echo '<p>Prévisualisation des forfaits de suivi : </p>';
+    $DBAction = new DBActions();
+    $forfaits = $DBAction->getListForfaits();
 
-function getForfaitTitleByID($forfait_id) {
-    global $wpdb;
-    $table_forfait = $wpdb->prefix.'forfait';
-    $sql = "SELECT title FROM {$table_forfait} WHERE id=$forfait_id";
-    $forfaitTitle = $wpdb->get_var($sql);
-    return $forfaitTitle;
-}
+    echo '<table class="custom-table-widget">';
+        echo '<thead>';
+            echo '<tr>';
+                echo '<th class="custom-col">Nom</th>';
+                echo '<th class="custom-col">Temps Total</th>';
+                echo '<th class="custom-col">Temps Restant</th>';
+                echo '<th class="custom-col">Tâches Attribuées</th>';
+            echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+            foreach ($forfaits as $forfait) :
 
-/** RECUPERATION LIST TASKS **/
-function getListTasks($forfait_id){
-    global $wpdb;
-    $table_tasks = $wpdb->prefix.'tasks';
-    $sql = "SELECT * FROM {$table_tasks} WHERE forfait_id={$forfait_id} ORDER BY `created_at` DESC;";
-    $tasksList = $wpdb->get_results($sql);
-    return $tasksList;
-}
+                $forfaitTasks = $DBAction->getListTasks($forfait->id);
+                $tasksTotalTime = $DBAction->getTimeTotalsForTasks($forfait->id);
+                $forfaitTotalTime = $forfait->total_time;
 
-// Si l'objet existe, on installe le plugin sur le menu//
-if (isset($inst_forfait)){
+                if ($tasksTotalTime) {
+                    $totalForfait = new DateTime($forfaitTotalTime, new DateTimeZone('Europe/Paris'));
+                    $totalTasks = new DateTime($tasksTotalTime, new DateTimeZone('Europe/Paris'));
 
+                    $interval = $totalForfait->diff($totalTasks);
+                    $interval = $interval->format('%H:%I:%S');
+
+                    $totalForfaitDisplay = $totalForfait->format('H:i');
+                    $totalTasksDisplay = $totalTasks->format('H:i');
+                } else {
+                    $interval = $forfaitTotalTime;
+                }
+
+            echo '<tr class="overview-tasks">';
+                echo '<th scope="row">'.$forfait->title.'</th>';
+                echo '<th>'.$forfait->total_time.'</th>';
+                echo '<th>'.$interval.'</th>';
+                echo '<th>'.$DBAction->getTasksNumberByForfait($forfait->id).'</th>';
+            echo '</tr>';
+            endforeach;
+        echo '</tbody>';
+    echo '</table>';
 }
