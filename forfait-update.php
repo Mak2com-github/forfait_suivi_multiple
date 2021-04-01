@@ -42,18 +42,18 @@ function forfait_update() {
             ?>
             <div class="custom-plugin-form">
                 <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-                    <input type="hidden" name="id" value="<?= $forfait[0]->id ?>">
+                    <input type="hidden" name="id" value="<?php if(!empty($forfait[0]->id)) { echo $forfait[0]->id; } ?>">
                     <div class="custom-plugin-form-fields">
                         <label for="title">Nom</label>
-                        <input name="title" type="text" value="<?= $forfait[0]->title ?>" placeholder="Titre du forfait" required>
+                        <input name="title" type="text" value="<?php if(!empty($forfait[0]->title)) { echo $forfait[0]->title; } ?>" placeholder="Titre du forfait" required>
                     </div>
                     <div class="custom-plugin-form-fields">
                         <label for="total_time">Temps Total</label>
-                        <input name="total_time" type="time" value="<?= $forfait[0]->total_time ?>" required>
+                        <input name="total_time" type="time" value="<?php if(!empty($forfait[0]->total_time)) { echo $forfait[0]->total_time; } ?>" required>
                     </div>
                     <div class="custom-plugin-form-fields">
                         <label for="description">Description</label>
-                        <textarea name="description" placeholder="Description du forfait" rows="5" required><?= $forfait[0]->description ?></textarea>
+                        <textarea name="description" placeholder="Description du forfait" rows="5" required><?php if (!empty($forfait[0]->description)) { echo $forfait[0]->description; } ?></textarea>
                     </div>
                     <input class="custom-plugin-submit" type="submit" name="update_forfait" value="Modifier">
                 </form>

@@ -34,28 +34,30 @@ function tasks_update() {
                 ?>
                 <div class="custom-plugin-form">
                     <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-                        <input type="hidden" name="id" value="<?= $task[0]->id ?>">
+                        <input type="hidden" name="id" value="<?php if (!empty($task[0]->id)) { echo $task[0]->id; } ?>">
                         <div class="custom-plugin-form-fields">
                             <label for="forfait_id">Selectionner le forfait</label>
                             <p class="post-scriptum">(Forfait sur lequelle la tâche seras déduite)</p>
                             <select class="form-control" name="forfait_id" id="forfaitSelect" required>
                                 <option value="">-- Selectionner un Forfait --</option>
                                 <?php foreach ($forfaits as $forfait) : ?>
-                                    <option value="<?php echo $forfait->id; ?>" <?php if ($task[0]->forfait_id === $forfait->id) { echo 'selected'; } ?>><?php echo $forfait->title; ?></option>
+                                    <?php if (!empty($task[0])) { ?>
+                                        <option value="<?php echo $forfait->id; ?>" <?php if ($task[0]->forfait_id === $forfait->id) { echo 'selected'; } ?>><?php echo $forfait->title; ?></option>
+                                    <?php } ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="custom-plugin-form-fields">
                             <label for="title">Nom</label>
-                            <input name="title" type="text" value="<?= $task[0]->title ?>" placeholder="Titre du forfait" required>
+                            <input name="title" type="text" value="<?php if (!empty($task[0]->title)) { echo $task[0]->title; } ?>" placeholder="Titre du forfait" required>
                         </div>
                         <div class="custom-plugin-form-fields">
                             <label for="total_time">Temps Total</label>
-                            <input name="task_time" type="time" value="<?= $task[0]->task_time ?>" required>
+                            <input name="task_time" type="time" value="<?php if (!empty($task[0]->task_time)) { echo $task[0]->task_time; } ?>" required>
                         </div>
                         <div class="custom-plugin-form-fields">
                             <label for="description">Description</label>
-                            <textarea name="description" placeholder="Description du forfait" rows="5" required><?= $task[0]->description ?></textarea>
+                            <textarea name="description" placeholder="Description du forfait" rows="5" required><?php if (!empty($task[0]->description)) { echo $task[0]->description; } ?></textarea>
                         </div>
                         <input class="custom-plugin-submit" type="submit" name="update_task" value="Modifier">
                     </form>
