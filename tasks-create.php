@@ -53,13 +53,7 @@ function tasks_create() {
                                     $interval = $forfaitTotalTime;
                                 }
                                 ?>
-                                <?php if ($interval <= '00:00') : ?>
-                                    <option id="forfait<?= $forfait->id ?>" class="alert-red" value="<?= $forfait->id; ?>" data-time="<?= $interval ?>"><?= $forfait->title ?> N'as plus de temps</option>
-                                <?php elseif ($interval <= '01:00') : ?>
-                                    <option id="forfait<?= $forfait->id ?>" class="alert-orange" value="<?= $forfait->id; ?>" data-time="<?= $interval ?>"><?= $forfait->title ?> N'as presque plus de temps</option>
-                                <?php else : ?>
-                                    <option id="forfait<?= $forfait->id ?>" class="<?= $forfait->id ?>" value="<?= $forfait->id; ?>" data-time="<?= $interval ?>"><?php echo $forfait->title; ?></option>
-                                <?php endif; ?>
+                                <option id="forfait<?= $forfait->id ?>" class="<?= $forfait->id ?>" value="<?= $forfait->id; ?>" data-time="<?= $interval ?>"><?php echo $forfait->title; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
