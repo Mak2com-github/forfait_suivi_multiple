@@ -1,6 +1,6 @@
 # Forfait Suivi
 Plugin WordPress permettant le suivis des tâches effectués en intervention sur le site d'un client.
-Il permet la création de forfaits ainsi que de tâches assignées à un des forfaits créés.
+Il permet la création de multiples forfaits ainsi que de tâches assignées à un des forfaits créés avec un système de relations entre les tâches et les forfaits.
 
 ## Installation
 
