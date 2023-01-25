@@ -231,14 +231,14 @@
 }
 
 .forfait-main {
-    width: 100%;
+    width: 99%;
     height: auto;
 }
 
 .forfait-main .head {
-    width: 98%;
+    width: 100%;
     text-align: center;
-    margin: 1% 0 3% 0;
+    margin: 1% 0 2% 0;
     border-bottom: 1px solid lightgrey;
 }
 
@@ -252,6 +252,7 @@
     flex-direction: row;
     justify-content: center;
     margin-top: 2%;
+    margin-bottom: 2%;
 }
 .forfait-main .head-infos div {
     margin: 0 2%;
@@ -260,17 +261,16 @@
 .forfait-main .forfaits-main-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .custom-plugin-form {
-    width: 15%;
+    width: 20%;
     height: auto;
     padding: 1%;
     background-color: white;
     border: 1px solid #c1c1c1;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 30%);
+    border-radius: 1px;
 }
 
 .custom-plugin-form form {
@@ -376,8 +376,8 @@
 }
 
 .selected-forfait-datas {
-    display: none;
     border-radius: 5px;
+    margin-bottom: 5%;
 }
 
 .selected-forfait-datas-group {
@@ -490,6 +490,7 @@
 .custom-table-overview {
     width: 70%;
     border: 1px solid lightgrey;
+    height: fit-content;
 }
 
 .custom-table-overview thead {

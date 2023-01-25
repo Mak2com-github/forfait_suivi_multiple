@@ -23,6 +23,11 @@ function forfait_overview() {
                 <h3>Les Forfaits</h3>
                 <p>Filtrer la liste des tâches par forfaits</p>
                 <div class="overview-filters-forfaits">
+                    <?php if ($forfaits >= 2) : ?>
+                        <div class="overview-forfaits-btn">
+                            <button class="forfait-custom-btn activeButton" id="all">Tous</button>
+                        </div>
+                    <?php endif; ?>
                     <?php foreach ($forfaits as $forfait) : ?>
                         <div class="overview-forfaits-btn">
                             <button class="forfait-custom-btn" id="<?= $forfait->id ?>"><?= $forfait->title ?></button>

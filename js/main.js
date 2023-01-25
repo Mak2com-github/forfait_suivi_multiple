@@ -6,9 +6,7 @@ function toggle_by_class_name(cls) {
     }
 }
 
-function selectForfaitTimeCheck(value)
-{
-    console.log(value);
+function selectForfaitTimeCheck(value) {
     if(value){
         var optionValueTime = document.getElementById("forfait"+value);
         console.log(optionValueTime.dataset.time)
@@ -54,8 +52,14 @@ function displayOverviewTableRows() {
         jQuery(this).toggleClass('activeButton');
 
         let elementID = jQuery(this).attr("id")
-        jQuery('.custom-table-overview tbody tr').show().filter(':not(.'+elementID+')').hide()
-        jQuery('.selected-forfait-datas').show().filter(':not(.'+elementID+')').hide()
+
+        if (elementID === "all") {
+            jQuery('.custom-table-overview tbody tr').show()
+            jQuery('.selected-forfait-datas').show()
+        } else {
+            jQuery('.custom-table-overview tbody tr').show().filter(':not(.'+elementID+')').hide()
+            jQuery('.selected-forfait-datas').show().filter(':not(.'+elementID+')').hide()
+        }
     })
 }
 
