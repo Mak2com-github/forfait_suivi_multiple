@@ -22,9 +22,9 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-register_activation_hook(__FILE__, 'create_db');
+register_activation_hook(__FILE__, 'fsm_create_db');
 
-function create_db() {
+function fsm_create_db() {
 
     global $wpdb;
     global $forfait_db_version;
@@ -66,8 +66,8 @@ function create_db() {
 }
 
 /** INITIALISATION DU PLUGIN **/
-add_action('admin_menu','init_plugin_menu');
-function init_plugin_menu(){
+add_action('admin_menu','fsm_init_plugin_menu');
+function fsm_init_plugin_menu(){
 
     add_menu_page(
         'Forfait Suivi',
@@ -116,8 +116,8 @@ function init_plugin_menu(){
     );
 }
 
-add_action('admin_init', 'dbOperatorFunctions');
-function dbOperatorFunctions() {
+add_action('admin_init', 'fsm_dbOperatorFunctions');
+function fsm_dbOperatorFunctions() {
 
     if (isset($_POST['save_forfait'])) {
         $DBAction = new DBActions();
@@ -159,8 +159,8 @@ require_once(ROOTDIR . 'tasks-create.php');
 require_once(ROOTDIR . 'tasks-update.php');
 
 /** ACTIVATION CSS / JS / BOOTSTRAP **/
-add_action('admin_init', 'forfait_admin_js_css');
-function forfait_admin_js_css(){
+add_action('admin_init', 'fsm_admin_js_css');
+function fsm_admin_js_css(){
     wp_enqueue_script('font-awesome', 'https://kit.fontawesome.com/5397c1f880.js', null, null, true);
     wp_register_style('Forfait_css', plugins_url('css/admin-forfait.css', __FILE__));
     wp_enqueue_style('Forfait_css');
@@ -168,13 +168,13 @@ function forfait_admin_js_css(){
     wp_enqueue_script('jQuery-Ui', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', null, null, true);
 }
 
-add_action('wp_dashboard_setup', 'my_custom_dashboard_widgets');
-function my_custom_dashboard_widgets() {
+add_action('wp_dashboard_setup', 'fsm_dashboard_widgets');
+function fsm_dashboard_widgets() {
     global $wp_meta_boxes;
-    wp_add_dashboard_widget('custom_help_widget', 'Forfait Suivi', 'custom_dashboard_help');
+    wp_add_dashboard_widget('custom_help_widget', 'Forfait Suivi', 'fsm_custom_dashboard_help');
 }
 
-function custom_dashboard_help() {
+function fsm_custom_dashboard_help() {
     echo '<p>Prévisualisation des forfaits de suivi : </p>';
     $DBAction = new DBActions();
     $forfaits = $DBAction->getListForfaits();
